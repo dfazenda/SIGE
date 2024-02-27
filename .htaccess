@@ -1,0 +1,8 @@
+ Options -Indexes
+ RewriteEngine On
+
+ 
+ RewriteCond %{REQUEST_FILENAME} !-f
+ RewriteCond %{REQUEST_FILENAME} !-d
+ RewriteRule  ^(.*) components/core/master.php?url=$1 [QSA,L]  
+ RewriteRule  ^$ components/core/master.php?url=dashboard [QSA,L]

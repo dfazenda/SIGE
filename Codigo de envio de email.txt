@@ -1,0 +1,33 @@
+
+public function send_mail($destinatario_email, $destinatario_nome, $titulo, $corpo)
+{
+	try{
+	$mail = new PHPMailer(true);
+	$mail->isSMTP();                            //Indicar que usará SMTP
+	$mail->Host            = 'smtp.gmail.com';  //Endereco do Servidor SMTP
+	$mail->SMTPAuth        = true;		    //Habilitar autenticacao SMTP
+	$mail->Username        = '';		    //Nome de usuario SMTP
+	$mail->Password        = '';                //Senha SMTP
+	$mail->SMTPSecure      = 'tls';             //Habilitar criptografia TLS
+	$mail->Port	       = 587;               //Porta SMTP
+
+	$mail->CharSet = 'utf-8';
+	$mail->From = "";
+	$mail->FromName = "";
+	$mail->addAdress($destinatario_email, $destinatario_nome);
+	$mail->addReplyTo("", "Reply");
+	$mail->addBCC("");
+	$mail->isHTML(true);
+	$mail->Subject = $titulo;
+	$mail->Body = $corpo;
+	try{
+	$mail->send();
+	}catch (Exception $e){
+	$arr = array("success" => 0, "smg" => "Não conseguiu fazer o envio de e-mail. Por favor contactar o administrador.".$e);
+	echo json_encode($arr);
+	}
+     }catch (Exception $e){
+	$arr = array("success" => 0, "smg" => "Não conseguiu fazer o envio de e-mail. Por favor contactar o administrador.".$e);
+	echo json_encode($arr);
+	}
+}
